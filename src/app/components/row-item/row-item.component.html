@@ -1,0 +1,6 @@
+<td>{{ item.id }}</td>
+<td>{{ item.product }}</td>
+<td>Q.{{ item.price }}</td>
+<td>{{ item.quantity }}</td>
+<td>Q.{{ item.price * item.quantity }}</td>
+<td><button class="btn btn-danger btn-sm" (click)="onRemove(item.id)">Eliminar</button></td>
