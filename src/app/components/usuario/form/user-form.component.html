@@ -1,66 +1,47 @@
-<div class="modal" tabindex="-1" role="dialog" style="display: block;">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">{{ user.id > 0 ? 'Actualizar' : 'Crear' }} Usuario</h5>  
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onOpenClose()"></button>
+<div class="card">
+    <div class="card-content">
+        <div class="card-header">
+            <h5 class="card-title">{{ user.id > 0 ? 'Actualizar' : 'Crear' }} Usuario</h5>
         </div>
-        <div class="modal-body">
+        <div class="card-body">
             <form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
                 <div>
-                    <input 
-                    placeholder="Nombre"
-                    name="Nombre"
-                    [(ngModel)]="user.nombre"
-                    class="form-control my-2" 
-                    required
-                    #Nombre="ngModel"/>
-            
-                    @if (Nombre.invalid && (Nombre.dirty || Nombre.touched) && Nombre.errors!['required']) 
+                    <input placeholder="Nombre" name="Nombre" [(ngModel)]="user.nombre" class="form-control my-2"
+                        required #Nombre="ngModel" />
+
+                    @if (Nombre.invalid && (Nombre.dirty || Nombre.touched) && Nombre.errors!['required'])
                     {
                         <div class="alert alert-danger" style="padding: 0.5rem;">
                             <small>El nombre es requerido</small>
                         </div>
                     }
                 </div>
-            
+
                 <div>
-                    <input 
-                    placeholder="Apellido"
-                    name="Apellido"
-                    [(ngModel)]="user.apellido"
-                    class="form-control my-2" 
-                    required
-                    #Apellido="ngModel"/>
-            
-                    @if (Apellido.invalid && (Apellido.dirty || Apellido.touched) && Apellido.errors!['required']) 
+                    <input placeholder="Apellido" name="Apellido" [(ngModel)]="user.apellido" class="form-control my-2"
+                        required #Apellido="ngModel" />
+
+                    @if (Apellido.invalid && (Apellido.dirty || Apellido.touched) && Apellido.errors!['required'])
                     {
                         <div class="alert alert-danger" style="padding: 0.5rem;">
                             <small>El apellido es requerido</small>
                         </div>
                     }
                 </div>
-            
+
                 <div>
-                    <input 
-                    placeholder="Correo"
-                    name="Correo"
-                    type="email"
-                    [(ngModel)]="user.email"
-                    class="form-control my-2" 
-                    required
-                    email
-                    #Correo="ngModel"/>
-            
-                    @if (Correo.invalid && (Correo.dirty || Correo.touched)) 
+                    <input placeholder="Correo" name="Correo" type="email" [(ngModel)]="user.email"
+                        class="form-control my-2" required email #Correo="ngModel" />
+
+                    @if (Correo.invalid && (Correo.dirty || Correo.touched))
                     {
-                        @if (Correo.errors!['required']) 
+                        @if (Correo.errors!['required'])
                         {
                             <div class="alert alert-danger" style="padding: 0.5rem;">
                                 <small>El correo es requerido</small>
                             </div>
                         }
-                        @if (Correo.errors!['email']) 
+                        @else if (Correo.errors!['email'])
                         {
                             <div class="alert alert-danger" style="padding: 0.5rem;">
                                 <small>El correo no tiene el formato correcto</small>
@@ -68,74 +49,52 @@
                         }
                     }
                 </div>
-            
+
                 <div>
-                    <input 
-                    placeholder="Password"
-                    name="Password"
-                    type="password"
-                    [(ngModel)]="user.password"
-                    class="form-control my-2" 
-                    required
-                    minlength="6"
-                    #Password="ngModel"/>
-            
-                    @if (Password.invalid && (Password.dirty || Password.touched)) 
+                    <input placeholder="Password" name="Password" type="password" [(ngModel)]="user.password"
+                        class="form-control my-2" required minlength="6" #Password="ngModel" />
+
+                    @if (Password.invalid && (Password.dirty || Password.touched))
                     {
-            
-                        @if (Password.errors!['required']) 
+                        @if (Password.errors!['required'])
                         {
                             <div class="alert alert-danger" style="padding: 0.5rem;">
                                 <small>La contraseña es requerida</small>
                             </div>
-                        }
-                        @if (Password.errors!['minlength']) 
+                        } 
+                        @else if (Password.errors!['minlength']) 
                         {
                             <div class="alert alert-danger" style="padding: 0.5rem;">
                                 <small>La contraseña debe tener al menos 6 caracteres</small>
                             </div>
-                
                         }
                     }
-            
+
                 </div>
-            
+
                 <div>
-                    <input 
-                    placeholder="Username"
-                    name="Username"
-                    [(ngModel)]="user.username"
-                    class="form-control my-2" 
-                    required
-                    minlength="8"
-                    #Username="ngModel"/>
-            
-                    @if (Username.invalid && (Username.dirty || Username.touched)) 
+                    <input placeholder="Username" name="Username" [(ngModel)]="user.username" class="form-control my-2"
+                        required minlength="8" #Username="ngModel" />
+
+                    @if (Username.invalid && (Username.dirty || Username.touched))
                     {
-                        @if (Username.errors!['required']) 
+                        @if (Username.errors!['required'])
                         {
                             <div class="alert alert-danger" style="padding: 0.5rem;">
                                 <small>El usuario es requerido</small>
                             </div>
-            
                         }
-                        @if (Username.errors!['minlength']) 
+                        @else if (Username.errors!['minlength'])
                         {
                             <div class="alert alert-danger" style="padding: 0.5rem;">
                                 <small>El usuario debe tener al menos 8 caracteres</small>
                             </div>
-            
                         }
                     }
-                </div>        
-                <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ user.id > 0 ? 'Actualizar' : 'Crear' }}</button>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">{{ user.id > 0 ?
+                    'Actualizar' : 'Crear' }}</button>
             </form>
         </div>
-        <div class="modal-footer">
-            
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onOpenClose()">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
-
+</div>

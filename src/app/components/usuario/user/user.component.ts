@@ -1,23 +1,31 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { Usuario } from '../../../models/usuario';
 import Swal from 'sweetalert2';
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../../../services/user.service';
+import { SharingDataService } from '../../../services/sharing-data.service';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './user.component.html'
 })
 export class UserComponent {
 
-  @Input()
+  title: string = 'Listado de Usuarios';
+
   users: Usuario[] = [];
 
-  @Output()
-  idUserEventEmmiter: EventEmitter<number> = new EventEmitter<number>();
-
-  @Output()
-  selectedUserEventEmmiter: EventEmitter<Usuario> = new EventEmitter<Usuario>();
+  constructor(private sharingDataService: SharingDataService, private service: UserService,private router: Router) {
+    if (this.router.getCurrentNavigation()?.extras.state) {
+      this.users = this.router.getCurrentNavigation()?.extras.state!['users'];
+    } else {
+      this.service.findAll().subscribe((users: Usuario[]) => {
+        this.users = users;
+      });
+    }
+  }
 
   onRemoveUser(user: number): void {
     Swal.fire({
@@ -32,7 +40,7 @@ export class UserComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         // Lógica para eliminar el usuario
-        this.idUserEventEmmiter.emit(user);
+        this.sharingDataService.idUserEventEmmiter.emit(user);
         Swal.fire(
           'Eliminado!',
           'El usuario ha sido eliminado.',
@@ -43,6 +51,7 @@ export class UserComponent {
   }
 
   onEditUser(user: Usuario): void {
-    this.selectedUserEventEmmiter.emit(user);
+    // this.sharingDataService.selectedUserEventEmmiter.emit(user);
+    this.router.navigate(['/users/update', user.id], { state: { user } });
   }
 }
