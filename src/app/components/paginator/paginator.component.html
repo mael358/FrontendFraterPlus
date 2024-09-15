@@ -1,0 +1,26 @@
+@if (paginator.totalPages > 1) {
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" [routerLink]="[url, 0]">Primera</a>
+        </li>
+        @if (paginator.number > 0) {
+            <li class="page-item">
+                <a class="page-link" [routerLink]="[url, paginator.number - 1]">&#8656;</a>
+            </li>
+        }
+
+        <li class="page-item" *ngFor="let pagina of paginas" [ngClass]="pagina - 1 == paginator.number ? 'active':'' ">
+            <span class="page-link" *ngIf="pagina - 1 == paginator.number">{{ pagina }}</span>
+            <a class="page-link" *ngIf="pagina - 1 != paginator.number" [routerLink]="[url, pagina - 1]">{{ pagina }}</a>
+          </li>
+
+        @if (paginator.number < paginator.totalPages - 1) {
+            <li class="page-item">
+                <a class="page-link" [routerLink]="[url, paginator.number + 1]">&#8658;</a>
+            </li>
+        }
+        <li class="page-item">
+            <a class="page-link" [routerLink]="[url, paginator.totalPages - 1]">Ultima</a>
+        </li>
+    </ul>
+}

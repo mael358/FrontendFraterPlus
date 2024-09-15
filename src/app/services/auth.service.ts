@@ -59,7 +59,7 @@ export class AuthService {
     this._usuario.apellido = payload.apellido;
     this._usuario.email = payload.email;
     this._usuario.username = payload.user_name;
-    this._usuario.roles = payload.authorities;
+    //this._usuario.roles = payload.authorities;
     //guardando usuario en la sesion del navegador
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
   }
@@ -85,10 +85,11 @@ export class AuthService {
   }
 
   hasRole(role: string): boolean {
-    if(this.usuario.roles.includes(role)){
-      return true;
-    }
+    // if(this.usuario.roles.includes(role)){
+    //   return true;
+    // }
     return false;
+
   }
 
   logout(): void{

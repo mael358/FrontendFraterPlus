@@ -2,20 +2,40 @@ import { Injectable } from '@angular/core';
 
 import { Usuario } from '../models/usuario';
 import { URL_BACKEND } from '../data/config';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-    private users: Usuario[] = [
-        {id: 1, username: 'mael358', nombre: 'Marcos', apellido: 'Velasquez', password: 'admin', email: 'marcos@gmail.com', roles: ['ROLE_ADMIN', 'ROLE_USER']},
-        {id: 2, username: 'dialvehid', nombre: 'Diego', apellido: 'Velasquez', password: 'admin2', email: 'diego@gmail.com', roles: ['ROLE_ADMIN', 'ROLE_USER']}
-    ];
+    private baseUrl = `${URL_BACKEND}/usuarios`;
+
+    constructor(private httpClient: HttpClient) { }
 
     findAll(): Observable<Usuario[]> {
-        return of(this.users);
+        return this.httpClient.get<Usuario[]>(this.baseUrl);
+    }
+
+    findAllPageable(page: number): Observable<any> {
+        return this.httpClient.get<any>(`${this.baseUrl}/page/${page}`);
     }
   
+    findUserById(id: number): Observable<Usuario> {
+        return this.httpClient.get<Usuario>(`${this.baseUrl}/${id}`);
+    }
+
+    create(user: Usuario): Observable<Usuario> {
+        return this.httpClient.post<Usuario>(this.baseUrl, user);
+    }
+
+    update(user: Usuario): Observable<Usuario> {
+        return this.httpClient.put<Usuario>(`${this.baseUrl}/${user.id}`, user);
+    }
+
+    delete(id: number): Observable<void> {
+        console.log(`${this.baseUrl}/${id}`);
+        return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+    }
 }

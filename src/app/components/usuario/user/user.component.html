@@ -35,10 +35,11 @@
                     <td>
                         <button 
                         class="btn btn-warning btn-sm"
-                        (click)="onEditUser(user)">Editar</button>
+                        [routerLink]="['/users/update/', user.id]">Editar</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
+<paginator [paginator]="paginator" [url]="pageUrl"></paginator>
