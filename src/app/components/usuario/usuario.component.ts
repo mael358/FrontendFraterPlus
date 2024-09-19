@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SharingDataService } from '../../services/sharing-data.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-usuario',
@@ -20,6 +21,7 @@ export class UsuarioComponent implements OnInit{
 
   constructor(private router: Router, private usersService: UserService, 
     private sharingDataService: SharingDataService,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute) { 
   }
 
@@ -36,6 +38,38 @@ export class UsuarioComponent implements OnInit{
     this.removeUser();
     this.removeUser();
     this.findUserById();
+    this.handlerLogin();
+  }
+
+  handlerLogin() {
+    this.sharingDataService.handlerLoginEventEmitter.subscribe(({ username, password }) => {
+      console.log(username + ' ' + password);
+
+      this.authService.loginUser({ username, password }).subscribe({
+        next: response => {
+          const token = response.token;
+          const payload = this.authService.getPayload(token);
+
+          const user = { username: payload.sub };
+          const login = {
+            user,
+            isAuth: true,
+            isAdmin: payload.isAdmin
+          };
+          
+          this.authService.token = token;
+          this.authService.user = login;
+          this.router.navigate(['/users/page/0']);
+        },
+        error: error => {
+          if (error.status == 401) {
+            Swal.fire('Error en el Login', error.error.message, 'error')
+          } else {
+            throw error;
+          }
+        }
+      })
+    })
   }
 
   findUserById(){
