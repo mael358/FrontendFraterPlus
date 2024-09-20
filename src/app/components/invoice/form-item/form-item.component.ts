@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Item } from '../../models/item';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({

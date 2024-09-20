@@ -6,6 +6,9 @@ import { Forbidden403Component } from './components/forbidden403/forbidden403.co
 import { authGuard } from './guards/auth.guard';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { ClienteFormComponent } from './components/clientes/cliente-form/cliente-form.component';
+import { InvoiceComponent } from './components/invoice/invoice.component';
+import { FacturasComponent } from './components/facturas/facturas.component';
+import { PedidosComponent } from './components/pedidos/pedidos.component';
 
 export const routes: Routes = 
 [
@@ -60,6 +63,21 @@ export const routes: Routes =
     {
         path: 'clientes/form/:id',
         component: ClienteFormComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'facturas/form',
+        component: FacturasComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'facturas/form/:clienteId',
+        component: FacturasComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'pedidos/form/:clienteId',
+        component: PedidosComponent,
         canActivate: [authGuard]
     },
 ];
