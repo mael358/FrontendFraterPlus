@@ -4,13 +4,15 @@ import { UserFormComponent } from './components/usuario/form/user-form.component
 import { AuthComponent } from './components/auth/auth.component';
 import { Forbidden403Component } from './components/forbidden403/forbidden403.component';
 import { authGuard } from './guards/auth.guard';
+import { ClientesComponent } from './components/clientes/clientes.component';
+import { ClienteFormComponent } from './components/clientes/cliente-form/cliente-form.component';
 
 export const routes: Routes = 
 [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'users/page/0'
+        redirectTo: 'clientes/page/0'
     },
     {
         path: 'users',
@@ -39,5 +41,25 @@ export const routes: Routes =
     {
         path: 'forbidden',
         component: Forbidden403Component
-    }
+    },
+    {
+        path: 'clientes',
+        component: ClientesComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'clientes/page/:page',
+        component: ClientesComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'clientes/form',
+        component: ClienteFormComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'clientes/form/:id',
+        component: ClienteFormComponent,
+        canActivate: [authGuard]
+    },
 ];

@@ -6,11 +6,12 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SharingDataService } from '../../services/sharing-data.service';
 import { AuthService } from '../../services/auth.service';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-usuario',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent],
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
 })

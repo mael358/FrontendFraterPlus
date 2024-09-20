@@ -1,0 +1,140 @@
+<div class="card bg-dark text-white my-3">
+    <div class="card-header">
+      {{ titulo }}
+    </div>
+  
+    <div class="card-body">
+  
+  
+      <form #clienteForm="ngForm">
+        <!-- Nombre -->
+        <div class="form-group row my-2">
+          <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" [(ngModel)]="cliente.nombres" name="nombre" required minlength="4" #nombre="ngModel">
+            
+            <!-- Validacion de campos -->
+            @if (nombre.invalid && (nombre.dirty || nombre.touched)) {
+              @if (nombre.errors!['required']) {
+                <div class="alert alert-danger my-2" style="padding: 0.5rem;">
+                  <small>Nombre es requerido</small>
+                </div>
+              } 
+              @else if (nombre.errors!['minlength']) 
+              {
+                <div class="alert alert-danger my-2" style="padding: 0.5rem;">
+                  <small>Nombre debe tener al menos 4 caracteres</small>
+                </div>
+              }
+            }
+
+          </div>
+        </div>
+  
+        <!-- Apellido -->
+        <div class="form-group row my-2">
+          <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" [(ngModel)]="cliente.apellidos" name="apellido" required #apellido="ngModel"> <!-- required -->
+            
+            @if (apellido.invalid && (apellido.dirty || apellido.touched)) {
+              <div class="alert alert-danger my-2" style="padding: 0.5rem;">
+                <small>Apellido es requerido</small>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Direccion -->
+        <div class="form-group row my-2">
+          <label for="direccion" class="col-form-label col-sm-2">Direccion</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" [(ngModel)]="cliente.direccion" name="direccion" required #direccion="ngModel"> <!-- required -->
+            
+            @if (direccion.invalid && (direccion.dirty || direccion.touched)) {
+              <div class="alert alert-danger my-2" style="padding: 0.5rem;">
+                <small>La dirección es requerida</small>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Telefono -->
+        <div class="form-group row my-2">
+          <label for="telefono" class="col-form-label col-sm-2">telefono</label>
+          <div class="col-sm-6">
+            <input type="number" class="form-control" [(ngModel)]="cliente.telefono" name="telefono" required #telefono="ngModel"> <!-- required -->
+            
+            @if (telefono.invalid && (telefono.dirty || telefono.touched)) {
+              <div class="alert alert-danger my-2" style="padding: 0.5rem;">
+                <small>El telefono es requerido</small>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Extension -->
+        <div class="form-group row my-2">
+          <label for="extension" class="col-form-label col-sm-2">extension</label>
+          <div class="col-sm-6">
+            <input type="number" class="form-control" [(ngModel)]="cliente.extension" name="extension" required #extension="ngModel"> <!-- required -->
+            
+            @if (extension.invalid && (extension.dirty || extension.touched)) {
+              <div class="alert alert-danger my-2" style="padding: 0.5rem;">
+                <small>El extension es requerido</small>
+              </div>
+            }
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="form-group row my-2">
+          <label for="email" class="col-form-label col-sm-2">Email</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" [(ngModel)]="cliente.email" name="email" required email #email="ngModel">
+
+            @if (email.invalid && (email.dirty || email.touched)) {
+              @if (email.errors!['required']) {
+                <div class="alert alert-danger" style="padding: 0.5rem;">
+                  <small>Correo es requerido</small>
+                </div>
+              } @else if (email.errors!['email']) {
+                <div class="alert alert-danger" style="padding: 0.5rem;">
+                  <small>El correo no es una direccion valida</small>
+                </div>
+              }
+            }
+          </div>
+        </div>
+  
+        <!-- Fecha de nacimiento -->
+        <div class="form-group row my-2">
+          <label for="fechaNacimiento" class="col-form-label col-sm-2">Fecha de creacion</label>
+          <div class="col-sm-6">
+            <input matInput [matDatepicker]="picker" class="form-control" [(ngModel)]="cliente.fechaNacimiento" required #fechaNacimiento="ngModel" name="fechaNacimiento" style="display: inline; width: 300px;">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker></mat-datepicker>
+            
+            @if (fechaNacimiento.invalid && (fechaNacimiento.dirty || fechaNacimiento.touched)) {
+              <div class="alert alert-danger my-2" style="padding: 0.5rem;">
+                <small>Fecha de nacimiento es requerido</small>
+              </div>
+            }
+          </div>
+        </div>  
+  
+        <div class="form-group row px-2">
+          <div class="col-sm-6">
+            @if (!cliente.id) {
+              <button class="btn btn-primary" role="button" (click)="create()" [disabled]="!clienteForm.form.valid">Crear</button>
+            } @else {
+              <button class="btn btn-primary" role="button" (click)="update()" [disabled]="!clienteForm.form.valid">Editar</button>
+            }
+          </div>
+        </div>
+      </form>
+    </div>
+  
+  
+  
+  </div>
