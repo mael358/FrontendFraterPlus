@@ -9,6 +9,7 @@ import { ClienteFormComponent } from './components/clientes/cliente-form/cliente
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { FacturasComponent } from './components/facturas/facturas.component';
 import { PedidosComponent } from './components/pedidos/pedidos.component';
+import { PedidoDetalleComponent } from './components/pedidos/pedido-detalle/pedido-detalle.component';
 
 export const routes: Routes = 
 [
@@ -78,6 +79,11 @@ export const routes: Routes =
     {
         path: 'pedidos/form/:clienteId',
         component: PedidosComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'pedidos/:id',
+        component: PedidoDetalleComponent,
         canActivate: [authGuard]
     },
 ];

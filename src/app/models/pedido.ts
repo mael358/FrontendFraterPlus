@@ -1,11 +1,11 @@
 import { Cliente } from "./cliente";
-import { DetalleFactura } from "./detalleFactura";
+import { DetallePedido } from "./detallePedido";
 
 export class Pedido {
   id!: number;
   descripcion!: string;
   observacion!: string;
-  items: Array<DetalleFactura> = [];
+  items: Array<DetallePedido> = [];
   cliente!: Cliente;
   total!: number;
   createAt!: string;

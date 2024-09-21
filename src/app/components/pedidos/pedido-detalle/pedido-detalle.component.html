@@ -1,0 +1,61 @@
+@if (pedido){
+    <div class="card bg-light">
+        <div class="card-header">{{ titulo }}: {{ pedido.descripcion }}</div>
+        <div class="card-body">
+          <h4 class="card-title">
+            <a [routerLink]="['/clientes']" class="btn btn-light btn-xs">&laquo; volver</a>
+          </h4>
+      
+          <ul class="list-group my-2">
+            <li class="list-group-item list-group-item-primary">Datos del cliente</li>
+            <li class="list-group-item">{{ pedido.cliente.nombres }}</li>
+            <li class="list-group-item">{{ pedido.cliente.direccion }}</li>
+          </ul>
+      
+          <ul class="list-group my-2">
+            <li class="list-group-item list-group-item-primary">Datos de la factura:</li>
+            <li class="list-group-item">UUID: {{ pedido.id }}</li>
+            <li class="list-group-item">Fecha: {{ pedido.createAt | date:"EEEE dd, MMMM yyyy"}}</li>
+          </ul>
+      
+          <table class="table table-striped table-hover table-bordered my-3">
+            <thead>
+              <th>Articulo</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </thead>
+            <tbody>
+                @for (item of pedido.items; track $index) {
+                    <tr>
+                        <td>{{item.articulo.nombre}}</td>
+                        <td>{{item.articulo.valorVenta}}</td>
+                        <td>{{item.cantidad}}</td>
+                        <!-- <td>{{ MONEDA_LABEL }} {{item.calcularTotalVenta()}}</td> -->
+                         <td>45454</td>
+                    </tr>
+                }
+            </tbody>
+          </table>
+          <h5 class="float-right">
+            <span>Gran total </span>: <span class="badge badge-secondary">{{pedido.total}}</span>
+          </h5>
+      
+          <div class="card border-info mb-4">
+            <div class="card card-header">
+              Observaciones
+            </div>
+            <div class="card card-body">
+             @if (!pedido.observacion) {
+                <p>No tiene observaciones</p>
+             } @else {
+                <p>{{pedido.observacion}}</p>
+             }
+            </div>
+          </div>
+          <a [routerLink]="['/factura/form/']" class="btn btn-primary">Facturar</a>
+        </div>
+      </div>
+}
+
+  
