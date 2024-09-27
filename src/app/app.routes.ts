@@ -12,6 +12,7 @@ import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { PedidoDetalleComponent } from './components/pedidos/pedido-detalle/pedido-detalle.component';
 import { PedidoFormComponent } from './components/pedidos/pedido-form/pedido-form.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
+import { ComprasComponent } from './components/compras/compras.component';
 
 export const routes: Routes = 
 [
@@ -111,6 +112,16 @@ export const routes: Routes =
     {
         path: 'inventario/page/:page',
         component: InventarioComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'compras',
+        component: ComprasComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'compras/page/:page',
+        component: ComprasComponent,
         canActivate: [authGuard]
     },
 ];

@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-header">Compras</div>
+    <div class="card-body text-primary">
+      <h5 class="card-title">Listado de compras </h5>
+  
+      <div class="my-2 text-left">
+        <button type="button" class="btn btn-rounded btn-primary" name="button" [routerLink]="['/compras/form']">Crear compra</button>
+      </div>
+  
+      <mat-form-field class="mx-3">
+        <input type="text" placeholder="Buscar compra" aria-label="Compras" matInput (input)="onTextInput($event)">
+      </mat-form-field>
+  
+      @if (compras.length<=0) {
+        <div class="alert alert-info">
+          No se encuentran registros en la base de datos!
+        </div>
+  
+      } @else {
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Proveedor</th>
+              <th>Factura</th>
+              <th>Fecha creación</th>
+              <th>Detalle</th>
+              <th>Anular</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (compra of compras; track $index) {
+                <tr>
+                    <td> {{ compra.id }} </td>
+                    <td> {{ compra.proveedor }} </td>
+                    <td> {{ compra.factura }} </td>
+                    <td> {{ compra.fechaCreacion | date:"EEEE dd, MMMM yyyy"}} </td>
+                    <td>
+                    <button type="button" name="button" [routerLink]="['/compras/', compra.id]" class="btn btn-primary">Ver detalle</button>
+                    </td>
+                    <td>
+                    <button type="button" name="button" (click)="delete(compra)" class="btn btn-danger">Anular</button>
+                    </td>
+                </tr>
+            }
+          </tbody>
+        </table>
+
+        <paginator [paginator]="paginator" [url]="pageUrl"></paginator>
+      }
+    </div>
+  </div>
+  

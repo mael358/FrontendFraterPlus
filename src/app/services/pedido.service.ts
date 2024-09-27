@@ -15,8 +15,6 @@ export class PedidoService {
 
   private defaultSort: string = 'fecha,desc';
 
-  private pedido: Pedido = pedidoData;
-
   constructor(private http: HttpClient) { }
 
   getPedido(id: number): Observable<Pedido>{
