@@ -1,14 +1,20 @@
 import { Cliente } from "./cliente";
 import { DetallePedido } from "./detallePedido";
+import { DetallePedidoDTO } from "./dtos/detallePedidoDTO";
 
 export class Pedido {
   id!: number;
   descripcion!: string;
-  observacion!: string;
+  observaciones!: string;
+  estado!: string;
+  estadoId!: number;
   items: Array<DetallePedido> = [];
-  cliente!: Cliente;
+  detalles: Array<DetallePedidoDTO> = [];
+  //cliente!: Cliente;
+  cliente!: string;
+  clienteObj!: Cliente;
   total!: number;
-  createAt!: string;
+  fecha!: string;
 
   calcularGranTotal(): number{
     this.total = 0;

@@ -3,19 +3,22 @@
         <div class="card-header">{{ titulo }}: {{ pedido.descripcion }}</div>
         <div class="card-body">
           <h4 class="card-title">
-            <a [routerLink]="['/clientes']" class="btn btn-light btn-xs">&laquo; volver</a>
+            <a [routerLink]="['/pedidos']" class="btn btn-light btn-xs">&laquo; volver</a>
           </h4>
       
-          <ul class="list-group my-2">
-            <li class="list-group-item list-group-item-primary">Datos del cliente</li>
-            <li class="list-group-item">{{ pedido.cliente.nombres }}</li>
-            <li class="list-group-item">{{ pedido.cliente.direccion }}</li>
-          </ul>
+          @if (cliente) {
+            <ul class="list-group my-2">
+              <li class="list-group-item list-group-item-primary">Datos del cliente</li>
+              <li class="list-group-item">Nombre: {{ cliente.nombres }}</li>
+              <li class="list-group-item">Direccion: {{ cliente.direccion }}</li>
+              <li class="list-group-item">NIT: {{ cliente.nit }}</li>
+            </ul>
+          }
       
           <ul class="list-group my-2">
-            <li class="list-group-item list-group-item-primary">Datos de la factura:</li>
-            <li class="list-group-item">UUID: {{ pedido.id }}</li>
-            <li class="list-group-item">Fecha: {{ pedido.createAt | date:"EEEE dd, MMMM yyyy"}}</li>
+            <li class="list-group-item list-group-item-primary">Datos del pedido:</li>
+            <li class="list-group-item">ID: {{ pedido.id }}</li>
+            <li class="list-group-item">Fecha de creacion: {{ pedido.fecha | date:"EEEE dd, MMMM yyyy"}}</li>
           </ul>
       
           <table class="table table-striped table-hover table-bordered my-3">
@@ -23,16 +26,24 @@
               <th>Articulo</th>
               <th>Precio</th>
               <th>Cantidad</th>
+              <th>Cantidad Disp</th>
+              <th>Hay existencias</th>
               <th>Total</th>
             </thead>
             <tbody>
-                @for (item of pedido.items; track $index) {
+                @for (item of pedido.detalles; track $index) {
                     <tr>
-                        <td>{{item.articulo.nombre}}</td>
-                        <td>{{item.articulo.valorVenta}}</td>
+                        <td>{{item.articulo}}</td>
+                        <td>{{ MONEDA_LABEL }} {{item.precio}}</td>
                         <td>{{item.cantidad}}</td>
+                        <td>{{ item.cantidadDisponible }}</td>
+                        @if (item.cantidad > item.cantidadDisponible) {
+                            <td class="text-danger">NO</td>
+                        } @else {
+                            <td class="text-success">SI</td>
+                        }
                         <!-- <td>{{ MONEDA_LABEL }} {{item.calcularTotalVenta()}}</td> -->
-                         <td>45454</td>
+                         <td>{{ MONEDA_LABEL }} {{ item.precio * item.cantidad }}</td>
                     </tr>
                 }
             </tbody>
@@ -46,10 +57,10 @@
               Observaciones
             </div>
             <div class="card card-body">
-             @if (!pedido.observacion) {
+             @if (!pedido.observaciones) {
                 <p>No tiene observaciones</p>
              } @else {
-                <p>{{pedido.observacion}}</p>
+                <p>{{pedido.observaciones}}</p>
              }
             </div>
           </div>

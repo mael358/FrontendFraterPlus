@@ -1,135 +1,113 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Factura } from '../../models/factura';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { flatMap, map, Observable } from 'rxjs';
-import { Articulo } from '../../models/articulo';
+import { Cliente } from '../../models/cliente';
 import { ClientesService } from '../../services/cliente.service';
-import { FacturaService } from '../../services/factura.service';
-import { ArticuloService } from '../../services/articulo.service';
-import { DetallePedido } from '../../models/detallePedido';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
-import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { PaginatorComponent } from '../paginator/paginator.component';
 import { CommonModule } from '@angular/common';
-import { MONEDA_LABEL } from '../../data/config';
 import { Pedido } from '../../models/pedido';
 import { PedidoService } from '../../services/pedido.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { map, mergeMap } from 'rxjs';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'app-facturas',
+  selector: 'app-pedidos',
   standalone: true,
-  imports: [RouterModule, FormsModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, RouterModule, PaginatorComponent, MatFormFieldModule, MatAutocompleteModule, ReactiveFormsModule, MatInputModule, MatSelectModule],
   templateUrl: './pedidos.component.html'
 })
 export class PedidosComponent {
-  titulo: string = 'Nuevo pedido';
-  pedido: Pedido = new Pedido();
-  MONEDA_LABEL = MONEDA_LABEL;
-  
+
+  pedidos: Pedido[] = [];
+  clienteSeleccionado!: Pedido;
+  paginator: any;
+
   autoCompleteControl = new FormControl();
-  productosFiltrados!: Observable<Articulo[]>;
 
-  constructor(private clienteService: ClientesService,
+  pageUrl = '/pedidos/page';
+  page: number = 0;
+
+  options = [
+    { Id: 1, Name: 'Pendiente' },
+    { Id: 2, Name: 'Procesado' },
+    { Id: 3, Name: 'Enviado' },
+    { Id: 4, Name: 'Entregado' },
+    { Id: 5, Name: 'Cancelado' }
+  ];
+  selectedOption: any;
+  textoIngresado: string = "";
+
+  constructor(private pedidoService: PedidoService,
     private activatedRoute: ActivatedRoute,
-    private pedidoService: PedidoService,
-    private articuloService: ArticuloService,
-    private router: Router) { }
+    public authService: AuthService) { }
 
-
-  ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      let clienteId = +(params.get('clienteId') || '0');
-      this.clienteService.getCliente(clienteId).subscribe(cliente => this.pedido.cliente = cliente)
-    });
-
-    this.productosFiltrados = this.autoCompleteControl.valueChanges.pipe(
-      map(value => typeof value === 'string' ? value : value.nombre),
-      flatMap(value => value ? this._filter(value) : [])
-    );
-  }
-
-  private _filter(value: string): Observable<Articulo[]> {
-    const filterValue = value.toLowerCase();
-
-    return this.articuloService.filtrarProductos(filterValue);
-  }
-
-  mostrarNombre(producto?: Articulo): string {
-    return producto ? producto.nombre : '';
-  }
-
-  seleccionarProducto(event: MatAutocompleteSelectedEvent): void {
-    let producto = event.option.value as Articulo;
-    console.log(producto);
-
-    if (this.existeItem(producto.id)) {
-      this.incrementarCantidad(producto.id);
-    } else {
-      let nuevoItem = new DetallePedido();
-      nuevoItem.articulo = producto;
-      this.pedido.items.push(nuevoItem);
+    ngOnInit(): void {
+      this.activatedRoute.paramMap.subscribe(params => {
+        this.page = +(params.get('page') || '0');
+        if (!this.page) {
+          this.page = 0;
+        }
+        this.pedidoService.getPedidos(this.page, "", "").subscribe(
+          response => {
+            this.pedidos = (response.content as Pedido[])
+            this.paginator = response;
+          }
+        );
+      });
     }
 
-    this.autoCompleteControl.setValue('');
-    event.option.focus();
-    event.option.deselect();
-  }
+    onTextInput(event: any): void {
+      this.textoIngresado = event.target.value;
+      this.textoIngresado = this.textoIngresado ? this.textoIngresado : "";
 
-  actualizarCantidad(id: number, event: any): void {
-    let cantidad: number = event.target.value as number;
-    if (cantidad == 0) {
-      return this.eliminarItemFactura(id);
+      let estado = this.selectedOption ? this.selectedOption.Id : "";
+      
+      this.pedidoService.getPedidos(this.page, this.textoIngresado, estado).subscribe(
+        response => {
+          this.pedidos = (response.content as Pedido[])
+          this.paginator = response;
+        }
+      );
     }
-    this.pedido.items = this.pedido.items.map((item: DetallePedido) => {
-      if (id === item.articulo.id) {
-        item.cantidad = cantidad;
-      }
-      return item;
-    })
-  }
 
-  actualizarValorVenta(id: number, event: any): void {
-    let cantidad: number = event.target.value as number;
-    this.pedido.items = this.pedido.items.map((item: DetallePedido) => {
-      if (id === item.articulo.id) {
-        item.articulo.valorVenta = cantidad;
-      }
-      return item;
-    })
-  }
+    onOptionSelected(event: any): void {
+      this.selectedOption = event.value;
+      console.log('Selected option:', this.selectedOption);
 
-  existeItem(id: number): boolean {
-    let existe = false;
-    this.pedido.items.forEach((item: DetallePedido) => {
-      if (id === item.articulo.id) {
-        existe = true;
-      }
-    })
-    return existe;
-  }
-
-  incrementarCantidad(id: number): void {
-    this.pedido.items = this.pedido.items.map((item: DetallePedido) => {
-      if (id === item.articulo.id) {
-        ++item.cantidad;
-      }
-      return item;
-    })
-  }
-
-  eliminarItemFactura(id: number): void {
-    this.pedido.items = this.pedido.items.filter((item: DetallePedido) => id !== item.articulo.id)
-  }
-
-  create(): void{
-    console.log(this.pedido);
-    console.log(this.pedidoService.urlEndPoint);
-    this.pedidoService.create(this.pedido).subscribe(pedido => {
-      Swal.fire(this.titulo, `Factura ${pedido.descripcion} creada con exito!`, 'success');
-      this.router.navigate(['/pedidos', pedido.id]);
-    });
-  }
-
+      this.textoIngresado = this.textoIngresado ? this.textoIngresado : "";
+      let estado = this.selectedOption ? this.selectedOption.Id : "";
+      
+      this.pedidoService.getPedidos(this.page, this.textoIngresado, estado).subscribe(
+        response => {
+          this.pedidos = (response.content as Pedido[])
+          this.paginator = response;
+        }
+      );
+    }
+  
+    delete(pedido: Pedido): void {
+      Swal.fire({
+        title: '¿Estás seguro de eliminar?',
+        text: "Eliminarás completamente el registro.",
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, ¡Eliminalo!'
+      }).then((result) => {
+  
+        if (result.value) {
+          this.pedidoService.delete(pedido.id).subscribe((response) => {
+            this.pedidos = this.pedidos.filter(ped => ped !== pedido)
+            Swal.fire('Cliente eliminado', `Pedido eliminado con éxito`, 'success');
+          });
+        }
+      })
+    }
 }

@@ -25,6 +25,7 @@ export class ClientesService {
 
   //Ejemplo de GET
   getClientes(page: number): Observable<any> {
+    
     return this.http.get<Cliente[]>(this.urlEndPoint + '/page/' + page).pipe(
       tap((response: any) => {
         (response.content as Cliente[]).forEach(cliente => {
@@ -35,7 +36,6 @@ export class ClientesService {
         (response.content as Cliente[]).map(
           cliente => {
             cliente.nombres = cliente.nombres.toUpperCase();
-            cliente.apellidos = cliente.apellidos.toUpperCase();
             let datePipe = new DatePipe('es');
             cliente.fechaNacimiento = datePipe.transform(cliente.fechaNacimiento, 'fullDate') || '';
             return cliente;
@@ -99,6 +99,11 @@ export class ClientesService {
         return throwError(e);
       })
     );
+  }
+
+  filtrarClientes(value: string): Observable<Cliente[]> {
+    const filterValue = value.toLowerCase();
+    return this.http.get<Cliente[]>(`${this.urlEndPoint}/filtrar-clientes/${filterValue}`);
   }
 
 }

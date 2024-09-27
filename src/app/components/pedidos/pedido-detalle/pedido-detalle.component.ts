@@ -4,6 +4,8 @@ import { PedidoService } from '../../../services/pedido.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MONEDA_LABEL } from '../../../data/config';
 import { DatePipe } from '@angular/common';
+import { Cliente } from '../../../models/cliente';
+import { ClientesService } from '../../../services/cliente.service';
 
 @Component({
   selector: 'app-pedido-detalle',
@@ -14,19 +16,24 @@ import { DatePipe } from '@angular/common';
 export class PedidoDetalleComponent {
   
   pedido!: Pedido;
+  cliente!: Cliente;
   titulo: string = 'Pedido';
   MONEDA_LABEL = MONEDA_LABEL;
 
-
   constructor(private pedidoService: PedidoService,
-  private activatedRoute: ActivatedRoute) { }
+  private activatedRoute: ActivatedRoute,
+  private clienteService: ClientesService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.activatedRoute.paramMap.subscribe(params => {
       let id = +(params.get('id') || '0');
       this.pedidoService.getPedido(id).subscribe(pedido => {
         console.log(pedido);
         this.pedido = pedido
+        //TODO: Cambiar el cliente por el cliente real
+        //let clienteId = +this.pedido.cliente;
+        let clienteId = 1;
+        this.clienteService.getCliente(clienteId).subscribe(cliente => this.cliente = cliente)    
       })
     })
   }

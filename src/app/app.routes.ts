@@ -10,13 +10,14 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { FacturasComponent } from './components/facturas/facturas.component';
 import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { PedidoDetalleComponent } from './components/pedidos/pedido-detalle/pedido-detalle.component';
+import { PedidoFormComponent } from './components/pedidos/pedido-form/pedido-form.component';
 
 export const routes: Routes = 
 [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'clientes/page/0'
+        redirectTo: 'pedidos/page/0'
     },
     {
         path: 'users',
@@ -77,8 +78,23 @@ export const routes: Routes =
         canActivate: [authGuard]
     },
     {
-        path: 'pedidos/form/:clienteId',
+        path: 'pedidos',
         component: PedidosComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'pedidos/page/:page',
+        component: PedidosComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'pedidos/form',
+        component: PedidoFormComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'pedidos/form/:clienteId',
+        component: PedidoFormComponent,
         canActivate: [authGuard]
     },
     {

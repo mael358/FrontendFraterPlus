@@ -4,8 +4,8 @@
   <div class="card-body text-primary">
     <h5 class="card-title">Listado de clientes </h5>
 
-    <div class="my-2 text-left" type="button" [routerLink]="['/clientes/form']">
-      <button class="btn btn-rounded btn-primary" name="button">Crear cliente</button>
+    <div class="my-2 text-left">
+      <button type="button" [routerLink]="['/clientes/form']" class="btn btn-rounded btn-primary" name="button">Crear cliente</button>
     </div>
 
     @if (clientes.length<=0) {
