@@ -11,6 +11,7 @@ import { FacturasComponent } from './components/facturas/facturas.component';
 import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { PedidoDetalleComponent } from './components/pedidos/pedido-detalle/pedido-detalle.component';
 import { PedidoFormComponent } from './components/pedidos/pedido-form/pedido-form.component';
+import { InventarioComponent } from './components/inventario/inventario.component';
 
 export const routes: Routes = 
 [
@@ -100,6 +101,16 @@ export const routes: Routes =
     {
         path: 'pedidos/:id',
         component: PedidoDetalleComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'inventario',
+        component: InventarioComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'inventario/page/:page',
+        component: InventarioComponent,
         canActivate: [authGuard]
     },
 ];

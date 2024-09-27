@@ -26,10 +26,9 @@ export class PedidosComponent {
   pedidos: Pedido[] = [];
   clienteSeleccionado!: Pedido;
   paginator: any;
+  pageUrl = '/pedidos/page';
 
   autoCompleteControl = new FormControl();
-
-  pageUrl = '/pedidos/page';
   page: number = 0;
 
   options = [

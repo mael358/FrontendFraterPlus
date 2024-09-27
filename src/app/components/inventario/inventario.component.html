@@ -1,0 +1,49 @@
+<!-- <detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente> -->
+<div class="card">
+    <div class="card-header">Inventario</div>
+    <div class="card-body text-primary">
+      <h5 class="card-title">Listado de existencias </h5>
+  
+      <div class="my-2 text-left">
+        <button type="button" class="btn btn-rounded btn-primary" name="button" [routerLink]="['/compras/form']">Crear compra</button>
+      </div>
+  
+      <mat-form-field class="mx-3">
+        <input type="text" placeholder="Buscar pedido" aria-label="Pedidos" matInput (input)="onTextInput($event)">
+      </mat-form-field>
+  
+      @if (articulos.length<=0) {
+        <div class="alert alert-info">
+          No se encuentran registros en la base de datos!
+        </div>
+  
+      } @else {
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Articulo</th>
+              <th>Cantidad existencia</th>
+              <th>Lote mas antiguo</th>
+              <th>Ultimo movimiento</th>
+              <th>Tipo movimiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (pedido of articulos; track $index) {
+                <tr>
+                    <td> {{ pedido.id }} </td>
+                    <td> {{ pedido.descripcionDeArticulo }} </td>
+                    <td> {{ pedido.cantidadEnExistenciaActual }} </td>
+                    <td> {{ pedido.fechaDeCreacionDelLoteMasAntiguo | date:"EEEE dd, MMMM yyyy"}} </td>
+                    <td> {{ pedido.ultimoMovimientoDeLote | date:"EEEE dd, MMMM yyyy"}} </td>
+                    <td> {{ pedido.tipoDeMovimientoDeLote }} </td>
+                </tr>
+            }
+          </tbody>
+        </table>
+        <paginator [paginator]="paginator" [url]="pageUrl"></paginator>
+      }
+    </div>
+  </div>
+  

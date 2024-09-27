@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { URL_BACKEND } from '../data/config';
+import { PAGE_SIZE, URL_BACKEND } from '../data/config';
 import { Articulo } from '../models/articulo';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArticuloService {
+export class InventarioService {
 
-  public urlEndPoint: string = URL_BACKEND + '/articulos';
+  public urlEndPoint: string = URL_BACKEND + '/inventario';
+
+  private defaultSort: string = 'fecha,desc';
 
   constructor(private http: HttpClient) { }
 
@@ -26,4 +28,8 @@ export class ArticuloService {
 
 //   create(factura: Factura): Observable<Factura>{
 //   }
+
+  obtenerInventario(page: number, search: string): Observable<any>{ 
+    return this.http.get<any>(`${this.urlEndPoint}?page=${page}&size=${PAGE_SIZE}&sort=${this.defaultSort}&nombre=${search}&articuloid=`);
+  }
 }
