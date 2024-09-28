@@ -14,7 +14,9 @@ import { proveedoresData } from '../data/proveedores.data';
     providedIn: 'root'
 })
 export class ProveedorService {
-  private urlEndPoint: string = URL_BACKEND + '/proveedores';
+  private urlEndPoint: string = URL_BACKEND + '/proveedor';
+
+  private proveedores : any = proveedoresData;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -40,6 +42,8 @@ export class ProveedorService {
   }
 
   getProveedor(id: number): Observable<Proveedor> {
+    return of(this.proveedores[1]);
+    /*
     return this.http.get<Proveedor>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if (e.status != 401 && e.error.mensaje){
@@ -49,6 +53,7 @@ export class ProveedorService {
         return throwError(e);
       })
     );
+    */
   }
 
   update(cliente: Proveedor): Observable<any> {

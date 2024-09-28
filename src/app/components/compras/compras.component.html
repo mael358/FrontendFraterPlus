@@ -4,7 +4,7 @@
       <h5 class="card-title">Listado de compras </h5>
   
       <div class="my-2 text-left">
-        <button type="button" class="btn btn-rounded btn-primary" name="button" [routerLink]="['/compras/form']">Crear compra</button>
+        <button type="button" class="btn btn-rounded btn-primary" name="button" [routerLink]="['/compras/form/']">Crear compra</button>
       </div>
   
       <mat-form-field class="mx-3">
@@ -32,9 +32,9 @@
             @for (compra of compras; track $index) {
                 <tr>
                     <td> {{ compra.id }} </td>
-                    <td> {{ compra.proveedor }} </td>
-                    <td> {{ compra.factura }} </td>
-                    <td> {{ compra.fechaCreacion | date:"EEEE dd, MMMM yyyy"}} </td>
+                    <td> {{ compra.nombre_emisor }} </td>
+                    <td> {{ compra.no_factura }} </td>
+                    <td> {{ compra.fecha_creacion | date:"EEEE dd, MMMM yyyy"}} </td>
                     <td>
                     <button type="button" name="button" [routerLink]="['/compras/', compra.id]" class="btn btn-primary">Ver detalle</button>
                     </td>

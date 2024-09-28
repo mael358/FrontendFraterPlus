@@ -6,13 +6,14 @@ import { Forbidden403Component } from './components/forbidden403/forbidden403.co
 import { authGuard } from './guards/auth.guard';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { ClienteFormComponent } from './components/clientes/cliente-form/cliente-form.component';
-import { InvoiceComponent } from './components/invoice/invoice.component';
 import { FacturasComponent } from './components/facturas/facturas.component';
 import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { PedidoDetalleComponent } from './components/pedidos/pedido-detalle/pedido-detalle.component';
 import { PedidoFormComponent } from './components/pedidos/pedido-form/pedido-form.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
 import { ComprasComponent } from './components/compras/compras.component';
+import { CompraDetalleComponent } from './components/compras/compra-detalle/compra-detalle.component';
+import { CompraFormComponent } from './components/compras/compra-form/compra-form.component';
 
 export const routes: Routes = 
 [
@@ -124,4 +125,15 @@ export const routes: Routes =
         component: ComprasComponent,
         canActivate: [authGuard]
     },
+    {
+        path: 'compras/form',
+        component: CompraFormComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'compras/:id',
+        component: CompraDetalleComponent,
+        canActivate: [authGuard]
+    }
+
 ];

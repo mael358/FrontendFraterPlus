@@ -1,1 +1,64 @@
-<p>compra-detalle works!</p>
+@if (compra){
+    <div class="card bg-light">
+        <div class="card-header">{{ titulo }}</div>
+        <div class="card-body">
+          <h4 class="card-title">
+            <a [routerLink]="['/compras']" class="btn btn-light btn-xs">&laquo; volver</a>
+          </h4>
+      
+          @if (proveedor) {
+            <ul class="list-group my-2">
+              <li class="list-group-item list-group-item-primary">Datos del proveedor</li>
+              <li class="list-group-item">Nombre: {{ proveedor.nombres }}</li>
+              <li class="list-group-item">Direccion: {{ proveedor.direccion }}</li>
+              <li class="list-group-item">NIT: {{ proveedor.nit }}</li>
+            </ul>
+          }
+      
+          <ul class="list-group my-2">
+            <li class="list-group-item list-group-item-primary">Datos de la compra:</li>
+            <li class="list-group-item">ID: {{ compra.id }}</li>
+            <li class="list-group-item">Fecha de creacion: {{ compra.fecha_creacion | date:"EEEE dd, MMMM yyyy"}}</li>
+          </ul>
+      
+          <table class="table table-striped table-hover table-bordered my-3">
+            <thead>
+              <th>Articulo</th>
+              <th>Precio compra</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </thead>
+            <tbody>
+                @for (item of compra.detalle_factura; track $index) {
+                    <tr>
+                        <td>{{item.articuloid.nombre}}</td>
+                        <td>{{ MONEDA_LABEL }} {{item.precio_unitario}}</td>
+                        <td>{{item.cantidad}}</td>
+                        <!-- <td>{{ MONEDA_LABEL }} {{item.calcularTotalVenta()}}</td> -->
+                         <td>{{ MONEDA_LABEL }} {{ item.precio_unitario * item.cantidad }}</td>
+                    </tr>
+                }
+            </tbody>
+          </table>
+          <h5 class="float-right">
+            <span>Gran total </span>: <span class="badge badge-secondary">{{compra.monto_total}}</span>
+          </h5>
+      
+          <div class="card border-info mb-4">
+            <div class="card card-header">
+              Observaciones
+            </div>
+            <div class="card card-body">
+             @if (!compra.observaciones) {
+                <p>No tiene observaciones</p>
+             } @else {
+                <p>{{compra.observaciones}}</p>
+             }
+            </div>
+          </div>
+          <!-- <a [routerLink]="['/factura/form/']" class="btn btn-primary">Facturar</a> -->
+        </div>
+      </div>
+}
+
+  

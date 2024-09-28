@@ -1,4 +1,3 @@
-import { Invoice } from "../models/invoice";
 
 export const comprasData: any = {
     totalPages: 3,
@@ -20,72 +19,25 @@ export const comprasData: any = {
     size: 4,
     content: [
         {
-            id: 1,
-            proveedor: "Fulano de Tal",
-            factura: "UCI-001",
-            fechaCreacion: "2024-09-18T10:30:00Z",
+            id: 30,
+            no_factura: "FC-001",
+            nit_emisor: "12345678",
+            nombre_emisor: "Carlos",
+            monto_total: 975.0,
+            direccion_emisor: "123 Main St",
+            tipo_factura: true,
+            departamento_receptor: "Finance",
+            observaciones: "Paid in full",
+            fecha_creacion: "2024-09-18T10:30:00Z",
+            detalle_factura: [
+                { id: 1, cantidad: 2, precio_unitario: 100.0 },
+                { id: 2, cantidad: 3, precio_unitario: 75.0 }
+            ],
+            total: 975.0,
             items: [
-                {
-                    id: 1,
-                    cantidad: 1,
-                    articulo: {
-                        id: 1,
-                        nombre: "Articulo 1",
-                        valorCosto: 100,
-                        valorVenta: 150
-                    }
-                },
-                {
-                    id: 2,
-                    cantidad: 2,
-                    articulo: {
-                        id: 2,
-                        nombre: "Articulo 2",
-                        valorCosto: 200,
-                        valorVenta: 250
-                    }
-                }
+                { calcularTotalCosto: () => 200.0 },
+                { calcularTotalCosto: () => 225.0 }
             ]
-        },
-        {
-            id: 2,
-            proveedor: "Mengano de Cual",
-            factura: "UCI-002",
-            fechaCreacion: "2024-09-21T10:30:00Z",
-            items: [
-                {
-                    id: 1,
-                    cantidad: 1,
-                    articulo: {
-                        id: 1,
-                        nombre: "Articulo 1",
-                        valorCosto: 100,
-                        valorVenta: 150
-                    }
-                },
-                {
-                    id: 2,
-                    cantidad: 2,
-                    articulo: {
-                        id: 2,
-                        nombre: "Articulo 2",
-                        valorCosto: 200,
-                        valorVenta: 250
-                    }
-                }
-            ]
-        },
-        {
-            id: 3,
-            proveedor: "Zutano de Cual",
-            factura: "UCI-003",
-            fechaCreacion: "2024-09-22T10:30:00Z"
-        },
-        {
-            id: 4,
-            proveedor: "Perengano de Cual",
-            factura: "UCI-004",
-            fechaCreacion: "2024-09-25T10:30:00Z"
         }
     ],
     number: 0,
@@ -118,29 +70,51 @@ export const comprasData: any = {
     "last": true,
     "size": 10,
     "content": [
-        {
-            "id": 1,
-            "proveedor": "Fulano de Tal",
-            "factura": "UCI-001",
-            "fechaCreacion": "2024-09-01T10:30:00Z"
-        },
-        {
-            "id": 2,
-            "proveedor": "Mengano de Cual",
-            "factura": "UCI-002",
-            "fechaCreacion": "2024-09-01T10:30:00Z"
-        },
-        {
-            "id": 3,
-            "proveedor": "Zutano de Cual",
-            "factura": "UCI-003",
-            "fechaCreacion": "2024-09-01T10:30:00Z"
-        },
-        {
-            "id": 4,
-            "proveedor": "Perengano de Cual",
-            "factura": "UCI-004",
-            "fechaCreacion": "2024-09-01T10:30:00Z"
+         {
+            "id": 30,
+            "no_factura": "FC-001",
+            "nit_emisor": "12345678",
+            "nombre_emisor": "Carlos",
+            "monto_total": 975.0,
+            "direccion_emisor": "Zona 1, Ciudad de Guatemala",
+            "tipo_factura": false,
+            "departamento_receptor": null,
+            "observaciones": "Compra de materiales de oficina",
+            "detalle_factura": [
+                {
+                    "id": 22,
+                    "cantidad": 50,
+                    "precio_unitario": 10.5,
+                    "no_linea": 1,
+                    "articuloid": {
+                        "id": 1,
+                        "nombre": "Laptop HP",
+                        "descripcion": "Laptop HP Core i5, 8GB RAM, 256GB SSD",
+                        "valor_costo": 4500.0000,
+                        "valor_venta": 5000.0000
+                    },
+                    "precioUnitario": 10.5,
+                    "noLinea": 1
+                },
+                {
+                    "id": 23,
+                    "cantidad": 30,
+                    "precio_unitario": 15.0,
+                    "no_linea": 1,
+                    "articuloid": {
+                        "id": 2,
+                        "nombre": "Mouse Logitech",
+                        "descripcion": "Mouse inalámbrico Logitech, color negro",
+                        "valor_costo": 150.0000,
+                        "valor_venta": 200.0000
+                    },
+                    "precioUnitario": 15.0,
+                    "noLinea": 1
+                }
+            ],
+            "direccionEmisor": "Zona 1, Ciudad de Guatemala",
+            "tipoFactura": false,
+            "nitEmisor": "12345678"
         }
     ],
     "number": 0,

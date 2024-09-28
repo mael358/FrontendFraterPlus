@@ -23,15 +23,15 @@ import Swal from 'sweetalert2';
   templateUrl: './compra-form.component.html'
 })
 export class CompraFormComponent {
-  titulo: string = 'Nuevo pedido';
+  titulo: string = 'Nueva compra';
   compra: Compra = new Compra();
   proveedor!: Proveedor;
   MONEDA_LABEL = MONEDA_LABEL;
 
   autoCompleteControl = new FormControl();
-  autoCompleteControlCliente = new FormControl();
+  autoCompleteControlProveedor = new FormControl();
   productosFiltrados!: Observable<Articulo[]>;
-  clientesFiltrados!: Observable<Proveedor[]>;
+  proveedoresFiltrados!: Observable<Proveedor[]>;
 
   constructor(private comprasService: ComprasService,
     private proveedorService: ProveedorService,
@@ -46,7 +46,7 @@ export class CompraFormComponent {
       mergeMap(value => value ? this._filter(value) : [])
     );
 
-    this.clientesFiltrados = this.autoCompleteControlCliente.valueChanges.pipe(
+    this.proveedoresFiltrados = this.autoCompleteControlProveedor.valueChanges.pipe(
       map(value => typeof value === 'string' ? value : value.nombres),
       mergeMap(value => value ? this._filterProveedores(value) : [])
     );
@@ -54,14 +54,12 @@ export class CompraFormComponent {
 
   private _filter(value: string): Observable<Articulo[]> {
     const filterValue = value.toLowerCase();
-    console.log("Filtrando articulos: "+ filterValue);
     
     return this.articuloService.filtrarProductos(filterValue);
   }
 
   private _filterProveedores(value: string): Observable<Proveedor[]> {
     const filterValue = value.toLowerCase();
-
     return this.proveedorService.filtrarProveedores(filterValue);
   }
 
@@ -73,8 +71,8 @@ export class CompraFormComponent {
       this.incrementarCantidad(producto.id);
     } else {
       let nuevoItem = new DetalleCompra();
-      nuevoItem.articulo = producto;
-      this.compra.items.push(nuevoItem);
+      nuevoItem.articuloid = producto;
+      this.compra.detalle_factura.push(nuevoItem);
     }
 
     this.autoCompleteControl.setValue('');
@@ -88,15 +86,15 @@ export class CompraFormComponent {
     
     this.proveedor = proveedor;
 
-    this.autoCompleteControlCliente.setValue('');
+    this.autoCompleteControlProveedor.setValue('');
     event.option.focus();
     event.option.deselect();
   }
 
   existeItem(id: number): boolean {
     let existe = false;
-    this.compra.items.forEach((item: DetalleCompra) => {
-      if (id === item.articulo.id) {
+    this.compra.detalle_factura.forEach((item: DetalleCompra) => {
+      if (id === item.articuloid.id) {
         existe = true;
       }
     })
@@ -104,8 +102,8 @@ export class CompraFormComponent {
   }
 
   incrementarCantidad(id: number): void {
-    this.compra.items = this.compra.items.map((item: DetalleCompra) => {
-      if (id === item.articulo.id) {
+    this.compra.detalle_factura = this.compra.detalle_factura.map((item: DetalleCompra) => {
+      if (id === item.articuloid.id) {
         ++item.cantidad;
       }
       return item;
@@ -121,14 +119,14 @@ export class CompraFormComponent {
   }
 
   eliminarItemFactura(id: number): void {
-    this.compra.items = this.compra.items.filter((item: DetalleCompra) => id !== item.articulo.id)
+    this.compra.detalle_factura = this.compra.detalle_factura.filter((item: DetalleCompra) => id !== item.articuloid.id)
   }
 
   actualizarValorCompra(id: number, event: any): void {
     let cantidad: number = event.target.value as number;
-    this.compra.items = this.compra.items.map((item: DetalleCompra) => {
-      if (id === item.articulo.id) {
-        item.articulo.valorVenta = cantidad;
+    this.compra.detalle_factura = this.compra.detalle_factura.map((item: DetalleCompra) => {
+      if (id === item.articuloid.id) {
+        item.articuloid.valorCosto = cantidad;
       }
       return item;
     })
@@ -139,8 +137,8 @@ export class CompraFormComponent {
     if (cantidad == 0) {
       return this.eliminarItemFactura(id);
     }
-    this.compra.items = this.compra.items.map((item: DetalleCompra) => {
-      if (id === item.articulo.id) {
+    this.compra.detalle_factura = this.compra.detalle_factura.map((item: DetalleCompra) => {
+      if (id === item.articuloid.id) {
         item.cantidad = cantidad;
       }
       return item;
@@ -150,9 +148,10 @@ export class CompraFormComponent {
   create(): void{
     //this.compra.proveedor = this.cliente;
     //this.compra.estadoId = ESTADO_INICIAL_PEDIDO;
+    this.compra.proveedorid = this.proveedor.id;
     console.log(this.compra);
-    this.comprasService.create(this.compra).subscribe(compra => {
-      Swal.fire(this.titulo, `Pedido creado con exito!`, 'success');
+        this.comprasService.create(this.compra).subscribe(compra => {
+      Swal.fire(this.titulo, `Compra creado con exito!`, 'success');
       this.router.navigate(['/compras', compra.id]);
     });
   }
