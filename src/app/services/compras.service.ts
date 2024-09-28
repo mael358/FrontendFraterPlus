@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { URL_BACKEND } from '../data/config';
 import { Articulo } from '../models/articulo';
 import { comprasData } from '../data/compras.data';
+import { Compra } from '../models/compra';
 
 
 @Injectable({
@@ -22,8 +23,8 @@ export class ComprasService {
     //return this.http.get(`${this.urlEndPoint}?page=${page}&term=${term}`);
   }
 
-  filtrarProductos(term: string): Observable<Articulo[]>{
-    return this.http.get<Articulo[]>(`${this.urlEndPoint}/filtrar-articulo/${term}`);
+  create(compra: Compra) : Observable<Compra>{
+    return this.http.post<Compra>(this.urlEndPoint, compra);
   }
 
   delete(id: number){

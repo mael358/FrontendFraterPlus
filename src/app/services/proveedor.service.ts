@@ -77,4 +77,9 @@ export class ProveedorService {
     );
   }
 
+  filtrarProveedores(term: string): Observable<Proveedor[]> {
+    const filterValue = term.toLowerCase();
+    return this.http.get<Proveedor[]>(`${this.urlEndPoint}/filtrar-proveedores/${filterValue}`);
+  }
+
 }

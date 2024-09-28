@@ -19,17 +19,61 @@ export const comprasData: any = {
     last: true,
     size: 4,
     content: [
-{
+        {
             id: 1,
             proveedor: "Fulano de Tal",
             factura: "UCI-001",
-            fechaCreacion: "2024-09-18T10:30:00Z"
+            fechaCreacion: "2024-09-18T10:30:00Z",
+            items: [
+                {
+                    id: 1,
+                    cantidad: 1,
+                    articulo: {
+                        id: 1,
+                        nombre: "Articulo 1",
+                        valorCosto: 100,
+                        valorVenta: 150
+                    }
+                },
+                {
+                    id: 2,
+                    cantidad: 2,
+                    articulo: {
+                        id: 2,
+                        nombre: "Articulo 2",
+                        valorCosto: 200,
+                        valorVenta: 250
+                    }
+                }
+            ]
         },
         {
             id: 2,
             proveedor: "Mengano de Cual",
             factura: "UCI-002",
-            fechaCreacion: "2024-09-21T10:30:00Z"
+            fechaCreacion: "2024-09-21T10:30:00Z",
+            items: [
+                {
+                    id: 1,
+                    cantidad: 1,
+                    articulo: {
+                        id: 1,
+                        nombre: "Articulo 1",
+                        valorCosto: 100,
+                        valorVenta: 150
+                    }
+                },
+                {
+                    id: 2,
+                    cantidad: 2,
+                    articulo: {
+                        id: 2,
+                        nombre: "Articulo 2",
+                        valorCosto: 200,
+                        valorVenta: 250
+                    }
+                }
+            ]
         },
         {
             id: 3,
