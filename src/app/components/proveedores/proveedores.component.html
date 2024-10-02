@@ -1,14 +1,14 @@
 <!-- <detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente> -->
-<!-- <div class="card">
+<div class="card">
     <div class="card-header">Proveedores</div>
     <div class="card-body text-primary">
       <h5 class="card-title">Listado de proveedores</h5>
   
-      <div class="my-2 text-left" type="button" [routerLink]="['/clientes/form']">
-        <button class="btn btn-rounded btn-primary" name="button">Crear cliente</button>
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/proveedores/form']" class="btn btn-rounded btn-primary" name="button">Crear Proveedor</button>
       </div>
   
-      @if (clientes.length<=0) {
+      @if (proveedores.length<=0) {
         <div class="alert alert-info">
           No se encuentran registros en la base de datos!
         </div>
@@ -18,27 +18,25 @@
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Email</th>
-              <th>Fecha de creacion</th>
-              <th>Pedido</th>
+              <th>Direccion</th>
+              <th>Telefono</th>
+              <th>NIT</th>
               <th>Editar</th>
               <th>Eliminar</th>
             </tr>
           </thead>
           <tbody>
-            @for (cliente of clientes; track $index) {
+            @for (proveedor of proveedores; track $index) {
                 <tr>
-                    <td> {{ cliente.nombres }} </td>
-                    <td> {{ cliente.email }} </td>
-                    <td> {{ cliente.fechaNacimiento }} </td>
+                    <td> {{ proveedor.nombres }} </td>
+                    <td> {{ proveedor.direccion }} </td>
+                    <td> {{ proveedor.telefono }} </td>
+                    <td> {{ proveedor.nit }} </td>
                     <td>
-                    <button type="button" class="btn btn-success btn-sm" [routerLink]="['/pedidos/form', cliente.id]">Crear</button>
+                    <button type="button" name="button" [routerLink]="['/proveedores/form/', proveedor.id]" class="btn btn-primary">Editar</button>
                     </td>
                     <td>
-                    <button type="button" name="button" [routerLink]="['/clientes/form/', cliente.id]" class="btn btn-primary">Editar</button>
-                    </td>
-                    <td>
-                    <button type="button" name="button" (click)="delete(cliente)" class="btn btn-danger">Eliminar</button>
+                    <button type="button" name="button" (click)="delete(proveedor)" class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
             }
@@ -48,4 +46,4 @@
       }
     </div>
   </div>
-   -->
+  

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
-import { tap, map, catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { URL_BACKEND } from '../data/config';
-import { Cliente } from '../models/cliente';
+import { PAGE_SIZE, URL_BACKEND } from '../data/config';
 import { Proveedor } from '../models/proveedor';
 import { proveedoresData } from '../data/proveedores.data';
 
@@ -21,13 +19,14 @@ export class ProveedorService {
   constructor(private http: HttpClient, private router: Router) { }
 
   //Ejemplo de GET
-  getProveedores(page: number): Observable<Proveedor[]> {
-    return of(proveedoresData);
+  getProveedores(page: number): Observable<any> {
+    //return of(proveedoresData);
+    return this.http.get<any>(`${this.urlEndPoint}?page=${page}&size=${PAGE_SIZE}`);
   }
 
   //Ejemplo de POST
-  create(cliente: Proveedor): Observable<Proveedor> {
-    return this.http.post<Proveedor>(this.urlEndPoint, cliente).pipe(
+  create(proveedor: Proveedor): Observable<Proveedor> {
+    return this.http.post<Proveedor>(`${this.urlEndPoint}/crear`, proveedor).pipe(
       map((response: any) => response.cliente as Proveedor),
       catchError(e => {
         if (e.status == 400) {
@@ -42,8 +41,7 @@ export class ProveedorService {
   }
 
   getProveedor(id: number): Observable<Proveedor> {
-    return of(this.proveedores[1]);
-    /*
+    //return of(this.proveedores[1]);
     return this.http.get<Proveedor>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
         if (e.status != 401 && e.error.mensaje){
@@ -53,12 +51,11 @@ export class ProveedorService {
         return throwError(e);
       })
     );
-    */
   }
 
-  update(cliente: Proveedor): Observable<any> {
-    console.log(cliente);
-    return this.http.put<Proveedor>(`${this.urlEndPoint}/${cliente.id}`, cliente).pipe(
+  update(proveedor: Proveedor): Observable<any> {
+    console.log(proveedor);
+    return this.http.put<Proveedor>(`${this.urlEndPoint}/editar`, proveedor).pipe(
       catchError(e => {
         if (e.status == 400) {
           return throwError(e);
@@ -71,8 +68,8 @@ export class ProveedorService {
     );
   }
 
-  delete(id: number): Observable<Proveedor> {
-    return this.http.delete<Proveedor>(`${this.urlEndPoint}/${id}`).pipe(
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.urlEndPoint}/eliminar?id=${id}`).pipe(
       catchError(e => {
         if(e.error.mensaje){
           console.error(e.error.mensaje);

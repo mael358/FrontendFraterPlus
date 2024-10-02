@@ -5,9 +5,20 @@ export class Proveedor {
     nombres!: string;
     direccion!: string;
     nit!: string;
+    dpi!: string;
     telefono!: string;
     extension!: string;
 
     // Borrar estos campos
-    email!: string;
+    correo!: string;
+
+    constructor() {
+        this.nombres = '';
+        this.direccion = '';
+        this.nit = '';
+        this.dpi = '';
+        this.telefono = '';
+        this.extension = '';
+        this.correo = '';
+    }
 }
