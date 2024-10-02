@@ -13,7 +13,8 @@ import { CompraDTO } from '../models/dtos/compraDTO';
 })
 export class ComprasService {
 
-  public urlEndPoint: string = URL_BACKEND + '/api/facturas/compra';
+  private urlEndPoint: string = URL_BACKEND + '/api/facturas/compra';
+  private urlEndPointDelete: string = URL_BACKEND + '/api/facturas/anular';
 
   private compras: any = comprasData;
 
@@ -31,7 +32,7 @@ export class ComprasService {
   }
 
   delete(id: number){
-    return this.http.delete<void>(`${this.urlEndPoint}/${id}`);
+    return this.http.delete<void>(`${this.urlEndPointDelete}/${id}`);
   }
 
   getCompra(id: number){

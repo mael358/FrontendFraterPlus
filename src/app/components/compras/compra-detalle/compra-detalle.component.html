@@ -9,15 +9,16 @@
           @if (proveedor) {
             <ul class="list-group my-2">
               <li class="list-group-item list-group-item-primary">Datos del proveedor</li>
-              <li class="list-group-item">Nombre: {{ proveedor.nombres }}</li>
-              <li class="list-group-item">Direccion: {{ proveedor.direccion }}</li>
-              <li class="list-group-item">NIT: {{ proveedor.nit }}</li>
+              <li class="list-group-item">Nombre: {{ compra.nombre_emisor }}</li>
+              <li class="list-group-item">Direccion: {{ compra.direccion_emisor }}</li>
+              <li class="list-group-item">NIT: {{ compra.nit_emisor }}</li>
             </ul>
           }
       
           <ul class="list-group my-2">
             <li class="list-group-item list-group-item-primary">Datos de la compra:</li>
             <li class="list-group-item">ID: {{ compra.id }}</li>
+            <li class="list-group-item">Número factura: {{ compra.no_factura }}</li>
             <li class="list-group-item">Fecha de creacion: {{ compra.fecha_creacion | date:"EEEE dd, MMMM yyyy"}}</li>
           </ul>
       

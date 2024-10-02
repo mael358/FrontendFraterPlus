@@ -14,6 +14,7 @@ import { InventarioComponent } from './components/inventario/inventario.componen
 import { ComprasComponent } from './components/compras/compras.component';
 import { CompraDetalleComponent } from './components/compras/compra-detalle/compra-detalle.component';
 import { CompraFormComponent } from './components/compras/compra-form/compra-form.component';
+import { FacturaDetalleComponent } from './components/facturas/factura-detalle/factura-detalle.component';
 
 export const routes: Routes = 
 [
@@ -133,6 +134,21 @@ export const routes: Routes =
     {
         path: 'compras/:id',
         component: CompraDetalleComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'facturas',
+        component: FacturasComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'facturas/page/:page',
+        component: FacturasComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'facturas/:id',
+        component: FacturaDetalleComponent,
         canActivate: [authGuard]
     }
 

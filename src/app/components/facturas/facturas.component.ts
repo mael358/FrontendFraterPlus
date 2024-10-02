@@ -14,110 +14,53 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { MONEDA_LABEL } from '../../data/config';
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 @Component({
   selector: 'app-facturas',
   standalone: true,
-  imports: [RouterModule, FormsModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, ReactiveFormsModule, CommonModule],
+  imports: [RouterModule, FormsModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, ReactiveFormsModule, CommonModule, PaginatorComponent],
   templateUrl: './facturas.component.html'
 })
 export class FacturasComponent {
-  titulo: string = 'Nueva factura';
-  factura: Factura = new Factura();
-  MONEDA_LABEL = MONEDA_LABEL;
-  
-  autoCompleteControl = new FormControl();
-  productosFiltrados!: Observable<Articulo[]>;
+  paginator: any;
+  pageUrl = '/facturas/page';
+  page: number = 0;
 
-  constructor(private clienteService: ClientesService,
-    private activatedRoute: ActivatedRoute,
+  textoIngresado: string = "";
+
+  facturas: Factura[] = [];
+
+  constructor(private activatedRoute: ActivatedRoute,
     private facturaService: FacturaService,
-    private articuloService: ArticuloService,
     private router: Router) { }
 
 
   ngOnInit(): void {
+    //Obtener facturas
     this.activatedRoute.paramMap.subscribe(params => {
-      let clienteId = +(params.get('clienteId') || '0');
-      this.clienteService.getCliente(clienteId).subscribe(cliente => this.factura.cliente = cliente)
+      this.page = +(params.get('page') || '0');
+      if (!this.page) {
+        this.page = 0;
+      }
+      this.facturaService.obtenerFacturas(this.page, "").subscribe(
+        response => {
+          this.facturas = (response.content as Factura[])
+          this.paginator = response;
+        }
+      );
     });
+  }
 
-    this.productosFiltrados = this.autoCompleteControl.valueChanges.pipe(
-      map(value => typeof value === 'string' ? value : value.nombre),
-      flatMap(value => value ? this._filter(value) : [])
+  onTextInput(event: any): void {
+
+  }
+
+  delete(factura: Factura) {
+    this.facturaService.delete(factura.id).subscribe(
+      response => {
+        this.facturas = this.facturas.filter(fa => fa !== factura);
+      }
     );
   }
-
-  private _filter(value: string): Observable<Articulo[]> {
-    const filterValue = value.toLowerCase();
-
-    return this.articuloService.filtrarProductos(filterValue);
-  }
-
-  mostrarNombre(producto?: Articulo): string {
-    return producto ? producto.nombre : '';
-  }
-
-  seleccionarProducto(event: MatAutocompleteSelectedEvent): void {
-    let producto = event.option.value as Articulo;
-    console.log(producto);
-
-    if (this.existeItem(producto.id)) {
-      this.incrementarCantidad(producto.id);
-    } else {
-      let nuevoItem = new DetalleFactura();
-      nuevoItem.articulo = producto;
-      this.factura.items.push(nuevoItem);
-    }
-
-    this.autoCompleteControl.setValue('');
-    event.option.focus();
-    event.option.deselect();
-  }
-
-  actualizarCantidad(id: number, event: any): void {
-    let cantidad: number = event.target.value as number;
-    if (cantidad == 0) {
-      return this.eliminarItemFactura(id);
-    }
-    this.factura.items = this.factura.items.map((item: DetalleFactura) => {
-      if (id === item.articulo.id) {
-        item.cantidad = cantidad;
-      }
-      return item;
-    })
-  }
-
-  existeItem(id: number): boolean {
-    let existe = false;
-    this.factura.items.forEach((item: DetalleFactura) => {
-      if (id === item.articulo.id) {
-        existe = true;
-      }
-    })
-    return existe;
-  }
-
-  incrementarCantidad(id: number): void {
-    this.factura.items = this.factura.items.map((item: DetalleFactura) => {
-      if (id === item.articulo.id) {
-        ++item.cantidad;
-      }
-      return item;
-    })
-  }
-
-  eliminarItemFactura(id: number): void {
-    this.factura.items = this.factura.items.filter((item: DetalleFactura) => id !== item.articulo.id)
-  }
-
-  create(): void{
-    console.log(this.factura);
-    console.log(this.facturaService.urlEndPoint);
-    this.facturaService.create(this.factura).subscribe(factura => {
-      Swal.fire(this.titulo, `Factura ${factura.descripcion} creada con exito!`, 'success');
-      this.router.navigate(['/facturas', factura.id]);
-    });
-  }
-
 }

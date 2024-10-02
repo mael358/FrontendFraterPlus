@@ -3,7 +3,7 @@ import { DetallePedido } from "../detallePedido";
 
 export class DetallePedidoDTO {
     articuloId!: number;
-    articulo!: string;
+    articulo!: number;
     cantidad!: number;
     precio!: number;
     linea!: number;
@@ -13,16 +13,12 @@ export class DetallePedidoDTO {
 
     constructor(linea: number, detalle: DetallePedido) {
       this.articuloId = detalle.articulo.id;
-      this.articulo = detalle.articulo.nombre;
+      this.articulo = detalle.articulo.id;
       this.cantidad = +detalle.cantidad;
       this.precio = +detalle.articulo.valorVenta;
       this.linea = linea;
     }
   }
-
-
-
-
 
 /*
   {

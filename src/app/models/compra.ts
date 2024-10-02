@@ -1,4 +1,5 @@
 import { DetalleCompra } from "./detalleCompra";
+import { Proveedor } from "./proveedor";
 
 export class Compra {
     id!: number;
@@ -17,7 +18,7 @@ export class Compra {
     observaciones: string;
 
 
-    proveedorid: number = 0;
+    proveedor_id!: Proveedor;
 
 
     calcularGranTotal(): number{

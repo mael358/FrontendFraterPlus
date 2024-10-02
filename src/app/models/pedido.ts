@@ -16,6 +16,8 @@ export class Pedido {
   total!: number;
   fecha!: string;
 
+  cliente_id!: number;
+
   calcularGranTotal(): number{
     this.total = 0;
     this.items.forEach((item) => {

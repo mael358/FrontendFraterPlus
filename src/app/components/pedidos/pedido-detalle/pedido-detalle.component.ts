@@ -30,9 +30,7 @@ export class PedidoDetalleComponent {
       this.pedidoService.getPedido(id).subscribe(pedido => {
         console.log(pedido);
         this.pedido = pedido
-        //TODO: Cambiar el cliente por el cliente real
-        //let clienteId = +this.pedido.cliente;
-        let clienteId = 1;
+        let clienteId = pedido.cliente_id;
         this.clienteService.getCliente(clienteId).subscribe(cliente => this.cliente = cliente)    
       })
     })

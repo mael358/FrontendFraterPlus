@@ -10,7 +10,7 @@ export class CompraDTO {
     detalles: Array<DetalleCompraDTO>;
 
     constructor(compra: Compra) {
-        this.idProveedor = compra.proveedorid; // Assuming cliente has an id property
+        this.idProveedor = compra.proveedor_id.id; // Assuming cliente has an id property
         this.observacion = compra.observaciones ? compra.observaciones : '';
         this.numero = compra.no_factura ? compra.no_factura : '';
         let lineCounter = 1;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { URL_BACKEND } from '../data/config';
+import { PAGE_SIZE, URL_BACKEND } from '../data/config';
 import { Factura } from '../models/factura';
 
 @Injectable({
@@ -9,7 +9,8 @@ import { Factura } from '../models/factura';
 })
 export class FacturaService {
 
-  public urlEndPoint: string = URL_BACKEND + '/api/facturas';
+  private urlEndPoint: string = URL_BACKEND + '/api/facturas/venta';
+  private anularEndpoint: string = URL_BACKEND + '/api/facturas/anular';
 
   constructor(private http: HttpClient) { }
 
@@ -17,8 +18,12 @@ export class FacturaService {
     return this.http.get<Factura>(`${this.urlEndPoint}/${id}`);
   }
 
+  obtenerFacturas(page: number, texto: string): Observable<any>{
+    return this.http.get<any>(`${this.urlEndPoint}?page=${page}&size=${PAGE_SIZE}`);
+  }
+
   delete(id: number){
-    return this.http.delete<void>(`${this.urlEndPoint}/${id}`);
+    return this.http.delete<void>(`${this.anularEndpoint}/${id}`);
   }
 
   create(factura: Factura): Observable<Factura>{

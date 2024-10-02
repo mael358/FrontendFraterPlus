@@ -8,6 +8,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { Compra } from '../../models/compra';
 import { ComprasService } from '../../services/compras.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-compras',
@@ -56,11 +57,24 @@ export class ComprasComponent {
   }
 
   delete(compra: Compra){
-    this.comprasService.delete(compra.id).subscribe(
-      response => {
-        this.compras = this.compras.filter(cli => cli !== compra);
+    Swal.fire({
+      title: '¿Estás seguro de eliminar?',
+      text: "Eliminarás completamente el registro.",
+      icon: 'error',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, ¡Eliminalo!'
+    }).then((result) => {
+      if (result.value) {
+        this.comprasService.delete(compra.id).subscribe(
+          response => {
+            this.compras = this.compras.filter(cli => cli !== compra);
+          }
+        );
       }
-    );
+    })
   }
 
   

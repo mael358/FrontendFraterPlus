@@ -30,10 +30,7 @@ export class CompraDetalleComponent {
       let id = +(params.get('id') || '0');
       this.comprasService.getCompra(id).subscribe(compra => {
         this.compra = compra
-        //TODO: Cambiar el proveedor por el proveedor real
-        //let clienteId = +this.pedido.cliente;
-        let proveedorId = 1;
-        this.proveedorService.getProveedor(proveedorId).subscribe(proveedor => this.proveedor = proveedor)    
+        this.proveedor = this.compra.proveedor_id;
       })
     })
   }

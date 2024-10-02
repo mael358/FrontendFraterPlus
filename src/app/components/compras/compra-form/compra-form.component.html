@@ -46,8 +46,17 @@
         <div class="form-group row my-2">
           <label for="" class="col-sm-2 col-form-label">Número factura</label>
           <div class="col-sm-6">
-            <input type="text" name="cliente" [(ngModel)]="compra.no_factura" class="form-control" />
+            <input type="text" name="no_factura" [(ngModel)]="compra.no_factura" class="form-control" #no_factura="ngModel" required/>
+            @if (no_factura.invalid && (no_factura.dirty || no_factura.touched)) {
+              @if (no_factura.errors!['required']) {
+                <div class="alert alert-danger my-2" style="padding: 0.5rem;">
+                  <small>El numero de factura es requerido</small>
+                </div>
+              } 
+            }
           </div>
+          <!-- Validacion de campos -->
+
         </div>
   
         <div class="form-group row">
@@ -117,7 +126,7 @@
         <div class="form-group row">
           <div class="col-sm-6">
             <input type="submit" (click)="create()" value="Crear compra" class="btn btn-secondary"
-             [disabled]="compraForm.form.invalid || compra.detalle_factura.length == 0"/>
+             [disabled]="compraForm.form.invalid || compra.detalle_factura.length == 0 || !proveedor"/>
           </div>
         </div>
       </form>

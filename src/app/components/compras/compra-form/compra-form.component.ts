@@ -148,9 +148,8 @@ export class CompraFormComponent {
   create(): void{
     //this.compra.proveedor = this.cliente;
     //this.compra.estadoId = ESTADO_INICIAL_PEDIDO;
-    this.compra.proveedorid = this.proveedor.id;
-    console.log(this.compra);
-        this.comprasService.create(this.compra).subscribe(compra => {
+    this.compra.proveedor_id = this.proveedor;
+    this.comprasService.create(this.compra).subscribe(compra => {
       Swal.fire(this.titulo, `Compra creado con exito!`, 'success');
       this.router.navigate(['/compras', compra.id]);
     });
