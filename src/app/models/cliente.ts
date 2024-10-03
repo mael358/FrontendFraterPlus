@@ -8,10 +8,10 @@ export class Cliente {
     direccion!: string;
     nit!: string;
     dpi!: string;
-    fechaNacimiento!: string;
+    fechaCreacion!: string;
     telefono!: string;
     extension!: string;
 
     // Borrar estos campos
-    email!: string;
+    correo!: string;
 }

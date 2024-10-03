@@ -2,6 +2,6 @@ export class Articulo {
     id!: number;
     nombre!: string;
     descripcion!: string;
-    valorCosto!: number;
-    valorVenta!: number;
+    valor_costo!: number;
+    valor_venta!: number;
 }

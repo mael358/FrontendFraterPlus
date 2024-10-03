@@ -37,7 +37,7 @@ export class ClientesService {
           cliente => {
             cliente.nombres = cliente.nombres.toUpperCase();
             let datePipe = new DatePipe('es');
-            cliente.fechaNacimiento = datePipe.transform(cliente.fechaNacimiento, 'fullDate') || '';
+            cliente.fechaCreacion = datePipe.transform(cliente.fechaCreacion, 'fullDate') || '';
             return cliente;
           });
         return response;

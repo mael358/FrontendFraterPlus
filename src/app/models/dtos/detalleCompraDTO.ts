@@ -11,7 +11,7 @@ export class DetalleCompraDTO {
         this.articuloId = detalle.articuloid.id;
         this.articulo = detalle.articuloid.id;
         this.cantidad = +detalle.cantidad;
-        this.precio = +detalle.articuloid.valorCosto;
+        this.precio = +detalle.articuloid.valor_costo;
         this.linea = linea;
       }
 }

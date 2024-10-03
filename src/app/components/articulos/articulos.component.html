@@ -1,0 +1,49 @@
+<!-- <detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente> -->
+<div class="card">
+    <div class="card-header">Articulos</div>
+    <div class="card-body text-primary">
+      <h5 class="card-title">Listado de articulos</h5>
+  
+      <div class="my-2 text-left">
+        <button type="button" [routerLink]="['/articulos/form']" class="btn btn-rounded btn-primary" name="button">Crear Articulo</button>
+      </div>
+  
+      @if (articulos.length<=0) {
+        <div class="alert alert-info">
+          No se encuentran registros en la base de datos!
+        </div>
+  
+      } @else {
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Costo</th>
+              <th>Venta</th>
+              <th>Editar</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (articulo of articulos; track $index) {
+                <tr>
+                    <td> {{ articulo.nombre }} </td>
+                    <td> {{ articulo.descripcion }} </td>
+                    <td> {{ MONEDA_LABEL }} {{ articulo.valor_costo | number:'1.2-2' }} </td>
+                    <td> {{ MONEDA_LABEL }} {{ articulo.valor_venta | number:'1.2-2' }} </td>
+                    <td>
+                    <button type="button" name="button" [routerLink]="['/articulos/form/', articulo.id]" class="btn btn-primary">Editar</button>
+                    </td>
+                    <td>
+                    <button type="button" name="button" (click)="delete(articulo)" class="btn btn-danger">Eliminar</button>
+                    </td>
+                </tr>
+            }
+          </tbody>
+        </table>
+        <paginator [paginator]="paginator" [url]="pageUrl"></paginator>
+      }
+    </div>
+  </div>
+  

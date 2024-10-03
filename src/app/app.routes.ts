@@ -17,6 +17,8 @@ import { CompraFormComponent } from './components/compras/compra-form/compra-for
 import { FacturaDetalleComponent } from './components/facturas/factura-detalle/factura-detalle.component';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { ProveedorFormComponent } from './components/proveedores/proveedor-form/proveedor-form.component';
+import { ArticulosComponent } from './components/articulos/articulos.component';
+import { ArticuloFormComponent } from './components/articulos/articulo-form/articulo-form.component';
 
 export const routes: Routes = 
 [
@@ -171,6 +173,26 @@ export const routes: Routes =
     {
         path: 'proveedores/form/:id',
         component: ProveedorFormComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'articulos',
+        component: ArticulosComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'articulos/page/:page',
+        component: ArticulosComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'articulos/form',
+        component: ArticuloFormComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'articulos/form/:id',
+        component: ArticuloFormComponent,
         canActivate: [authGuard]
     }
 ];

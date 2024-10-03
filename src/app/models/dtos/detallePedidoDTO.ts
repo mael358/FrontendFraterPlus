@@ -15,7 +15,7 @@ export class DetallePedidoDTO {
       this.articuloId = detalle.articulo.id;
       this.articulo = detalle.articulo.id;
       this.cantidad = +detalle.cantidad;
-      this.precio = +detalle.articulo.valorVenta;
+      this.precio = +detalle.articulo.valor_venta;
       this.linea = linea;
     }
   }

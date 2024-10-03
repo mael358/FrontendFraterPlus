@@ -72,7 +72,7 @@
                     <tr>
                         <td>{{item.articulo.nombre}}</td>
                         <!-- <td>{{ MONEDA_LABEL }}</td> -->
-                        <td><input type="number" value="{{item.articulo.valorVenta}}" class="form-control col-sm-4"
+                        <td><input type="number" value="{{item.articulo.valor_venta}}" class="form-control col-sm-4"
                             (change)="actualizarValorVenta(item.articulo.id, $event)"></td>
                         <td><input type="number" value="{{item.cantidad}}" class="form-control col-sm-4"
                         (change)="actualizarCantidad(item.articulo.id, $event)"></td>

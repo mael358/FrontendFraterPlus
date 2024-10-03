@@ -6,12 +6,12 @@ export class DetallePedido {
     articulo!: Articulo;
     
     calcularTotalCosto(): number{
-        return this.cantidad * this.articulo.valorCosto;
+        return this.cantidad * this.articulo.valor_costo;
     }
 
     calcularTotalVenta(): number{
         if (this.cantidad === 0 || !this.cantidad)
             return 0;
-        return this.cantidad * this.articulo.valorVenta;
+        return this.cantidad * this.articulo.valor_venta;
     }
 }

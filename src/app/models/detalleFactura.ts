@@ -10,12 +10,12 @@ export class DetalleFactura {
     calcularTotalCosto(): number{
         if (this.cantidad === 0 || !this.cantidad)
             return 0;
-        return this.cantidad * this.articuloid.valorCosto;
+        return this.cantidad * this.articuloid.valor_costo;
     }
 
     calcularTotalVenta(): number{
         if (this.cantidad === 0 || !this.cantidad)
             return 0;
-        return this.cantidad * this.articuloid.valorVenta;
+        return this.cantidad * this.articuloid.valor_venta;
     }
 }

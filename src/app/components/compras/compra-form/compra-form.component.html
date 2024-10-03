@@ -95,7 +95,7 @@
                     <tr>
                         <td>{{item.articuloid.nombre}}</td>
                         <!-- <td>{{ MONEDA_LABEL }}</td> -->
-                        <td><input type="number" value="{{item.articuloid.valorCosto}}" class="form-control col-sm-4"
+                        <td><input type="number" value="{{item.articuloid.valor_costo}}" class="form-control col-sm-4"
                             (change)="actualizarValorCompra(item.articuloid.id, $event)"></td>
                         <td><input type="number" value="{{item.cantidad}}" class="form-control col-sm-4"
                         (change)="actualizarCantidad(item.articuloid.id, $event)"></td>

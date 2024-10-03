@@ -124,7 +124,7 @@ export class PedidoFormComponent {
     let cantidad: number = event.target.value as number;
     this.pedido.items = this.pedido.items.map((item: DetallePedido) => {
       if (id === item.articulo.id) {
-        item.articulo.valorVenta = cantidad;
+        item.articulo.valor_venta = cantidad;
       }
       return item;
     })

@@ -15,8 +15,8 @@ export const pedidoData: any = {
             articulo: {
                 id: 1,
                 nombre: 'Motherboard',
-                valorCosto: 100,
-                valorVenta: 150
+                valor_costo: 100,
+                valor_venta: 150
             },
             cantidad: 1
         },
@@ -25,8 +25,8 @@ export const pedidoData: any = {
             articulo: {
                 id: 1,
                 nombre: 'CPU',
-                valorCosto: 100,
-                valorVenta: 150
+                valor_costo: 100,
+                valor_venta: 150
             },
             cantidad: 1
         },
@@ -35,8 +35,8 @@ export const pedidoData: any = {
             articulo: {
                 id: 1,
                 nombre: 'Asus',
-                valorCosto: 100,
-                valorVenta: 150
+                valor_costo: 100,
+                valor_venta: 150
             },
             cantidad: 2
         }

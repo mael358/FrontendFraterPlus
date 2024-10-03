@@ -126,7 +126,7 @@ export class CompraFormComponent {
     let cantidad: number = event.target.value as number;
     this.compra.detalle_factura = this.compra.detalle_factura.map((item: DetalleCompra) => {
       if (id === item.articuloid.id) {
-        item.articuloid.valorCosto = cantidad;
+        item.articuloid.valor_costo = cantidad;
       }
       return item;
     })
