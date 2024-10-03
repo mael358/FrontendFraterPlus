@@ -64,7 +64,9 @@
              }
             </div>
           </div>
-          <a [routerLink]="['/factura/form/']" class="btn btn-primary">Facturar</a>
+          @if (puedeFacturar) {
+            <a (click)="crearFactura()" class="btn btn-primary">Facturar</a>
+          }
         </div>
       </div>
 }

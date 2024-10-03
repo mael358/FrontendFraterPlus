@@ -28,7 +28,7 @@
             @for (factura of facturas; track $index) {
                 <tr>
                     <td> {{ factura.id }} </td>
-                    <td> {{ factura.nombre_emisor }} </td>
+                    <td> {{ factura.cliente_id.nombres }} </td>
                     <td> {{ factura.no_factura }} </td>
                     <td> {{ factura.fecha_creacion | date:"EEEE dd, MMMM yyyy"}} </td>
                     <td>

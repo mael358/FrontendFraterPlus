@@ -5,6 +5,7 @@ import { URL_BACKEND, PAGE_SIZE } from '../data/config';
 import { Pedido } from '../models/pedido';
 import { pedidoData } from '../data/pedido.data';
 import { PedidoDTO } from '../models/dtos/pedidoDTO';
+import { Factura } from '../models/factura';
 
 @Injectable({
   providedIn: 'root'

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PAGE_SIZE, URL_BACKEND } from '../data/config';
 import { Factura } from '../models/factura';
+import { FacturaDTO } from '../models/dtos/facturaDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class FacturaService {
   }
 
   create(factura: Factura): Observable<Factura>{
+    return this.http.post<Factura>(`${this.urlEndPoint}`, factura);
+  }
+
+  facturarPedido(factura: FacturaDTO): Observable<Factura>{
     return this.http.post<Factura>(`${this.urlEndPoint}`, factura);
   }
 }
