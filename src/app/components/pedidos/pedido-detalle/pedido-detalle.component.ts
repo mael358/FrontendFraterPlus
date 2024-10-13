@@ -3,7 +3,7 @@ import { Pedido } from '../../../models/pedido';
 import { PedidoService } from '../../../services/pedido.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MONEDA_LABEL } from '../../../data/config';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Cliente } from '../../../models/cliente';
 import { ClientesService } from '../../../services/cliente.service';
 import { FacturaService } from '../../../services/factura.service';
@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-pedido-detalle',
   standalone: true,
-  imports: [RouterModule, DatePipe],
+  imports: [RouterModule, DatePipe, CommonModule],
   templateUrl: './pedido-detalle.component.html'
 })
 export class PedidoDetalleComponent {
@@ -26,6 +26,7 @@ export class PedidoDetalleComponent {
   cliente!: Cliente;
   factura: FacturaDTO = new FacturaDTO();
   titulo: string = 'Pedido';
+  totalFactura: number = 0;
   puedeFacturar: boolean = true;
   MONEDA_LABEL = MONEDA_LABEL;
 
@@ -42,11 +43,10 @@ export class PedidoDetalleComponent {
         console.log(pedido);
         this.pedido = pedido;
         this.pedido.detalles.forEach(detalle => {
+          this.totalFactura += detalle.precio * detalle.cantidad;
           if(detalle.cantidadDisponible < detalle.cantidad){
             this.puedeFacturar = false;
         }});
-
-
         let clienteId = pedido.cliente_id;
         this.clienteService.getCliente(clienteId).subscribe(cliente => this.cliente = cliente)    
       })

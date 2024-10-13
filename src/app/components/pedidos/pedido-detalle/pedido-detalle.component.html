@@ -11,7 +11,7 @@
               <li class="list-group-item list-group-item-primary">Datos del cliente</li>
               <li class="list-group-item">Nombre: {{ cliente.nombres }}</li>
               <li class="list-group-item">Direccion: {{ cliente.direccion }}</li>
-              <li class="list-group-item">NIT: {{ cliente.nit }}</li>
+              <li class="list-group-item">NIT: 1234567</li>
             </ul>
           }
       
@@ -49,7 +49,7 @@
             </tbody>
           </table>
           <h5 class="float-right">
-            <span>Gran total </span>: <span class="badge badge-secondary">{{pedido.total}}</span>
+            Gran total: {{ MONEDA_LABEL }} {{totalFactura | number:'1.2-2'}}
           </h5>
       
           <div class="card border-info mb-4">

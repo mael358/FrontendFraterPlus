@@ -35,9 +35,9 @@
               {{ login.user.username }}
               <button
               (click)="handlerLogout()"
-              class="btn btn-outline-success" style="border-color: #F4A261; color: #F4A261;">Logout</button>
+              class="btn btn-outline-success" style="border-color: #F4A261; color: #F4A261;">Cerrar sesion</button>
           } @else {
-              <a class="btn btn-outline-primary" [routerLink]="['/login']" style="border-color: #F08080; color: #F08080;">Sign In</a>
+              <a class="btn btn-outline-primary" [routerLink]="['/login']" style="border-color: #F08080; color: #F08080;">Iniciar Sesion</a>
           }
       </span>
   </div>

@@ -6,6 +6,7 @@ import { ClientesService } from '../../../services/cliente.service';
 import { Cliente } from '../../../models/cliente';
 import { MONEDA_LABEL } from '../../../data/config';
 import { CommonModule, DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-factura-detalle',
@@ -25,6 +26,7 @@ export class FacturaDetalleComponent {
   ){ }
 
   ngOnInit(){
+    Swal.fire('Factura creada', `La factura ha sido creada correctamente`, 'success');
     this.activatedRoute.paramMap.subscribe(params => {
       let id = +(params.get('id') || '0');
       this.facturasService.getFactura(id).subscribe(factura => {

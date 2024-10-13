@@ -42,7 +42,7 @@
             </tbody>
           </table>
           <h5 class="float-right">
-            <span>Gran total </span>: <span class="badge badge-secondary">{{compra.monto_total}}</span>
+            Gran total: {{ MONEDA_LABEL }} {{compra.monto_total | number:'1.2-2'}}
           </h5>
       
           <div class="card border-info mb-4">
