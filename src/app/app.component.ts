@@ -16,7 +16,7 @@ import { SharingDataService } from './services/sharing-data.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'FraterPlus';
+  title = 'FraterPlusv2';
 
   constructor(private router: Router,
     private sharingDataService: SharingDataService,
