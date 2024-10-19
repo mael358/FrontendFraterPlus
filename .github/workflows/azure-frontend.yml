@@ -48,4 +48,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: fraterplus-frontend
-          images: ${{ secrets.ACR_LOGIN_SERVER }}/frontend-app:latest
+          images: ${{ secrets.ACR_LOGIN_SERVER }}/frater-plus-frontend:latest
