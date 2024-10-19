@@ -1,0 +1,51 @@
+name: Build and Deploy Frontend to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ${{ secrets.ACR_LOGIN_SERVER }}
+  IMAGE_NAME: frater-plus-frontend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the Angular app
+        run: npm run build --prod
+
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and Push Docker image
+        run: |
+          docker build -t $REGISTRY/$IMAGE_NAME:latest .
+          docker push $REGISTRY/$IMAGE_NAME:latest
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App for Containers
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: fraterplus-frontend
+          images: ${{ secrets.ACR_LOGIN_SERVER }}/frontend-app:latest

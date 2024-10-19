@@ -10,11 +10,14 @@
         <div class="form-group row">
           <div class="col-sm-6">
             <mat-form-field>
-              <input type="text" placeholder="Buscar proveedores" aria-label="Proveedores" matInput [formControl]="autoCompleteControlProveedor" [matAutocomplete]="autoClientes">
-              <mat-autocomplete #autoClientes="matAutocomplete" [displayWith]="mostrarNombreProveedor" (optionSelected)="seleccionarProveedor($event)">
-                <mat-option *ngFor="let proveedor of proveedoresFiltrados | async" [value]="proveedor">
-                  {{proveedor.nombres}}
-                </mat-option>
+              <input id="matProveedores" type="text" placeholder="Buscar proveedores" aria-label="Proveedores" matInput [formControl]="autoCompleteControlProveedor" [matAutocomplete]="autoProveedores">
+              <mat-autocomplete #autoProveedores="matAutocomplete" [displayWith]="mostrarNombreProveedor" (optionSelected)="seleccionarProveedor($event)">
+                @for (proveedor of proveedoresFiltrados | async; track $index) {
+                  <mat-option id="{{proveedor.id}}" [value]="proveedor">
+                    {{proveedor.nombres}}
+                  </mat-option>
+                }
+                
               </mat-autocomplete>
             </mat-form-field>
           </div>
@@ -69,11 +72,13 @@
         <div class="form-group row">
           <div class="col-sm-6">
             <mat-form-field>
-              <input type="text" placeholder="Añadir articulo" aria-label="Articulos" matInput [formControl]="autoCompleteControl" [matAutocomplete]="auto">
+              <input id="matArticulos" type="text" placeholder="Añadir articulo" aria-label="Articulos" matInput [formControl]="autoCompleteControl" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre" (optionSelected)="seleccionarProducto($event)">
-                <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
-                  {{producto.nombre}}
-                </mat-option>
+                @for (producto of productosFiltrados | async; track $index) {
+                    <mat-option id="{{producto.id}}" [value]="producto">
+                      {{producto.nombre}}
+                    </mat-option>
+                }
               </mat-autocomplete>
             </mat-form-field>
           </div>
